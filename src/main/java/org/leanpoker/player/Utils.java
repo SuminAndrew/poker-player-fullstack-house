@@ -49,4 +49,18 @@ public class Utils {
     public static boolean hasAHighCard(List<Card> cards) {
         return cards.stream().anyMatch(card -> card.rank() > 10);
     }
+
+    public static boolean hasPossibleStraightFlash(List<Card> cards) {
+        int rankDifference = Math.abs(cards.get(0).rank() - cards.get(1).rank());
+        if (rankDifference > 1) {
+            return false;
+        }
+        if (!Objects.equals(cards.get(0).suit(), cards.get(1).suit())) {
+            return false;
+        }
+        if (cards.stream().anyMatch(card -> card.rank() <= 3)) {
+            return false;
+        }
+        return true;
+    }
 }
