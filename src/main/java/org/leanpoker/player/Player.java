@@ -1,6 +1,6 @@
 package org.leanpoker.player;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import org.leanpoker.player.protocol.GameState;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ public class Player {
 
     static final String VERSION = "Java Bot v1";
 
-    public static int betRequest(JsonNode gameState) {
+    public static int betRequest(GameState gameState) {
         try {
             List<Card> ownCards = Utils.ownCards(gameState);
 
@@ -24,18 +24,17 @@ public class Player {
         return minimumRaise(gameState);
     }
 
-    public static void showdown(JsonNode gameState) {
+    public static void showdown(GameState gameState) {
     }
 
-    private static int minimumRaise(JsonNode gameState) {
+    private static int minimumRaise(GameState gameState) {
         int highestBet = Utils.getHighestBet(gameState);
         int ownBet = Utils.ownBet(gameState);
-        int minimumRaise = gameState.get("minimum_raise").asInt();
-
+        int minimumRaise = gameState.getMinimumRaise();
         return highestBet - ownBet + minimumRaise;
     }
 
-    private static int call(JsonNode gameState) {
+    private static int call(GameState gameState) {
         int highestBet = Utils.getHighestBet(gameState);
         int ownBet = Utils.ownBet(gameState);
         return highestBet - ownBet;

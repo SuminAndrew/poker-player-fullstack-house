@@ -10,6 +10,7 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import lombok.extern.slf4j.Slf4j;
+import org.leanpoker.player.protocol.GameState;
 
 import java.util.Map;
 
@@ -36,10 +37,12 @@ public class PlayerController {
         String action = body.get("action");
         String gameState = body.get("game_state");
         if ("bet_request".equals(action)) {
-            return String.valueOf(Player.betRequest(mapper.readTree(gameState)));
+            GameState state = mapper.readValue(gameState, GameState.class);
+            return String.valueOf(Player.betRequest(state));
         }
         if ("showdown".equals(action)) {
-            Player.showdown(mapper.readTree(gameState));
+            GameState state = mapper.readValue(gameState, GameState.class);
+            Player.showdown(state);
         }
         if ("version".equals(action)) {
             return Player.VERSION;
