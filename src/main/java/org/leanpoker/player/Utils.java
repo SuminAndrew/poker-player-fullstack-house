@@ -54,6 +54,10 @@ public class Utils {
         return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) > 10);
     }
 
+    public static boolean hasSameSuit(List<GameCard> cards) {
+        return cards.stream().map(GameCard::getSuit).distinct().toList().size() == 1;
+    }
+
     public static boolean hasPossibleStraightFlash(List<GameCard> cards) {
         int rankDifference = Math.abs(CardEvaluator.evaluateCard(cards.get(0).getRank()) -
                 CardEvaluator.evaluateCard(cards.get(1).getRank()));
