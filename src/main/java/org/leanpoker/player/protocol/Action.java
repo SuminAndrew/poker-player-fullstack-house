@@ -1,5 +1,6 @@
 package org.leanpoker.player.protocol;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 
 @Getter
@@ -14,5 +15,15 @@ public enum Action {
 
     Action(String action) {
         this.action = action;
+    }
+
+    @JsonCreator
+    public static Action fromString(String action) {
+        for (Action a : Action.values()) {
+            if (a.action.equalsIgnoreCase(action)) {
+                return a;
+            }
+        }
+        return null;
     }
 }

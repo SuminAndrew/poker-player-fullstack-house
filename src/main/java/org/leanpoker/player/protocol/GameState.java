@@ -94,4 +94,9 @@ public class GameState {
 
     @JsonProperty("community_cards")
     private List<Card> communityCards;
+
+    private List<GamePlayer> players;
+
+    @JsonProperty("minimum_raise")
+    private int minimumRaise;
 }

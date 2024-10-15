@@ -1,5 +1,6 @@
 package org.leanpoker.player.protocol;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -18,6 +19,7 @@ public enum Suit {
         this.suit = suit;
     }
 
+    @JsonCreator
     public static Suit fromString(String suit) {
         for (Suit s : Suit.values()) {
             if (s.suit.equals(suit)) {
