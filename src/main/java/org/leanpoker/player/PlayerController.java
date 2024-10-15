@@ -17,12 +17,7 @@ import java.util.Map;
 @Controller()
 public class PlayerController {
 
-    private final ObjectMapper objectMapper;
-    ObjectMapper mapper = new ObjectMapper();
-
-    public PlayerController(@Named("json") ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Get(produces = MediaType.TEXT_PLAIN)
     public String doGet() {
@@ -34,7 +29,7 @@ public class PlayerController {
     public String doPost(@Body Map<String, String> body) throws JsonProcessingException {
         String action = body.get("action");
         String gameState = body.get("game_state");
-        GameState state = objectMapper.readValue(gameState, GameState.class);
+        GameState state = mapper.readValue(gameState, GameState.class);
         if ("bet_request".equals(action)) {
             return String.valueOf(Player.betRequest(state));
         }
