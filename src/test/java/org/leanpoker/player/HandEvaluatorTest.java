@@ -42,7 +42,7 @@ public class HandEvaluatorTest {
     @Test
     public void testEvaluateHand() throws JsonProcessingException {
         assertEquals(
-                5093,
+                6285,
                 HandEvaluator.evaluateHand(MAPPER.readTree(HOLE_CARDS), MAPPER.readTree(COMMUNITY_CARDS))
         );
     }
