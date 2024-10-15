@@ -17,7 +17,7 @@ public class Player {
             }
 
             List<Card> ownCards = Utils.ownCards(gameState);
-            if (Utils.hasAPair(ownCards) || Utils.hasAHighCard(ownCards) ||
+            if (Utils.hasAPair(ownCards) || Utils.hasTwoHighCards(ownCards) ||
                     Utils.hasPossibleStraightFlash(ownCards)) {
                 return minimumRaise(gameState);
             } else {

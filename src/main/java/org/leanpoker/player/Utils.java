@@ -13,13 +13,13 @@ import java.util.Objects;
 public class Utils {
     public static int getHighestBet(GameState gameState) {
         return gameState.getCurrentBuyIn();
-//        JsonNode players = request.get("players");
-//        int maxBet = StreamSupport.stream(players.spliterator(), false)
-//                .filter(jsonNode -> !isOwnPlayer(jsonNode))
-//                .map(jsonNode -> jsonNode.get("bet").asInt())
-//                .max(Integer::compareTo)
-//                .orElse(0);
-//        return maxBet;
+        //        JsonNode players = request.get("players");
+        //        int maxBet = StreamSupport.stream(players.spliterator(), false)
+        //                .filter(jsonNode -> !isOwnPlayer(jsonNode))
+        //                .map(jsonNode -> jsonNode.get("bet").asInt())
+        //                .max(Integer::compareTo)
+        //                .orElse(0);
+        //        return maxBet;
     }
 
     public static int ownBet(GameState gameState) {
@@ -60,6 +60,10 @@ public class Utils {
 
     public static boolean hasAHighCard(List<Card> cards) {
         return cards.stream().anyMatch(card -> card.rank() > 10);
+    }
+
+    public static boolean hasTwoHighCards(List<Card> cards) {
+        return cards.stream().allMatch(card -> card.rank() > 10);
     }
 
     public static boolean hasPossibleStraightFlash(List<Card> cards) {
