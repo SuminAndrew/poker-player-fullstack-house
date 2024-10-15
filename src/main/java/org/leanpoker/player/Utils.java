@@ -91,4 +91,12 @@ public class Utils {
         GamePlayer ownPlayer = ownPlayer(gameState);
         return ownPlayer.getStack();
     }
+
+    private static boolean isOwnPlayer(JsonNode player) {
+        return Player.VERSION.equals(player.get("version").asText());
+    }
+
+    private static Card toCard(JsonNode card) {
+        return new Card(CardEvaluator.evaluateCard(card.get("rank").asText()), card.get("suit").asText());
+    }
 }
