@@ -28,11 +28,12 @@ public class PlayerController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String doPost(@Body Map<String, String> body) throws JsonProcessingException {
         Action action = Action.fromString(body.get("action"));
-        GameState state = mapper.readValue(body.get("game_state"), GameState.class);
         if (Action.BET_REQUEST.equals(action)) {
+            GameState state = mapper.readValue(body.get("game_state"), GameState.class);
             return String.valueOf(Player.betRequest(state));
         }
         if (Action.SHOWDOWN.equals(action)) {
+            GameState state = mapper.readValue(body.get("game_state"), GameState.class);
             Player.showdown(state);
         }
         if (Action.VERSION.equals(action)) {
