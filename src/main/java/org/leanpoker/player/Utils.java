@@ -65,4 +65,17 @@ public class Utils {
         }
         return true;
     }
+
+    public static List<JsonNode> otherActivePlayers(JsonNode gameState) {
+        JsonNode players = gameState.get("players");
+        return StreamSupport.stream(players.spliterator(), false)
+                .filter(jsonNode -> "active".equals(jsonNode.get("status").asText()))
+                .filter(jsonNode -> !Utils.isOwnPlayer(jsonNode))
+                .toList();
+    }
+
+    public static int ownStack(JsonNode gameState) {
+        JsonNode ownPlayer = ownPlayer(gameState);
+        return ownPlayer.get("stack").asInt();
+    }
 }
