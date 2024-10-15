@@ -1,5 +1,6 @@
 package org.leanpoker.player;
 
+import org.leanpoker.player.protocol.GamePlayer;
 import org.leanpoker.player.protocol.GameState;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public class Player {
 
     public static int betRequest(GameState gameState) {
         try {
-            List<JsonNode> otherActivePlayers = Utils.otherActivePlayers(gameState);
+            List<GamePlayer> otherActivePlayers = Utils.otherActivePlayers(gameState);
             if (otherActivePlayers.size() > 1 && Utils.ownStack(gameState) <= 50) {
                 return 0;
             }

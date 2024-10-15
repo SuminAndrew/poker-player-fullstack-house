@@ -3,6 +3,7 @@ package org.leanpoker.player;
 import lombok.extern.slf4j.Slf4j;
 import org.leanpoker.player.protocol.GamePlayer;
 import org.leanpoker.player.protocol.GameState;
+import org.leanpoker.player.protocol.Status;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,16 +65,15 @@ public class Utils {
         return true;
     }
 
-    public static List<JsonNode> otherActivePlayers(JsonNode gameState) {
-        JsonNode players = gameState.get("players");
-        return StreamSupport.stream(players.spliterator(), false)
-                .filter(jsonNode -> "active".equals(jsonNode.get("status").asText()))
-                .filter(jsonNode -> !Utils.isOwnPlayer(jsonNode))
+    public static List<GamePlayer> otherActivePlayers(GameState gameState) {
+        return gameState.getPlayers().stream()
+                .filter(player -> Status.ACTIVE.equals(player.getStatus()))
+                .filter(player -> !Utils.isOwnPlayer(player))
                 .toList();
     }
 
-    public static int ownStack(JsonNode gameState) {
-        JsonNode ownPlayer = ownPlayer(gameState);
-        return ownPlayer.get("stack").asInt();
+    public static int ownStack(GameState gameState) {
+        GamePlayer ownPlayer = ownPlayer(gameState);
+        return ownPlayer.getStack();
     }
 }
