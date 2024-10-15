@@ -9,13 +9,19 @@ public class Player {
     static final String VERSION = "Java Bot v1";
 
     public static int betRequest(JsonNode gameState) {
-        List<Card> ownCards = Utils.ownCards(gameState);
+        try {
+            List<Card> ownCards = Utils.ownCards(gameState);
 
-        if (Utils.hasAPair(ownCards) || Utils.hasAHighCard(ownCards)) {
-            return minimumRaise(gameState);
-        } else {
-            return 0;
+            if (Utils.hasAPair(ownCards) || Utils.hasAHighCard(ownCards)) {
+                return minimumRaise(gameState);
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return minimumRaise(gameState);
     }
 
     public static void showdown(JsonNode gameState) {
