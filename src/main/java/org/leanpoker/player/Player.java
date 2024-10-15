@@ -12,7 +12,7 @@ public class Player {
         List<Card> ownCards = Utils.ownCards(gameState);
 
         if (Utils.hasAPair(ownCards) || Utils.hasAHighCard(ownCards)) {
-            return betStrategyCallHighestBet(gameState);
+            return minimumRaise(gameState);
         } else {
             return 0;
         }
@@ -21,13 +21,17 @@ public class Player {
     public static void showdown(JsonNode gameState) {
     }
 
-    private static int betStrategyCallHighestBet(JsonNode gameState) {
-        int defaultBet = 100;
-
+    private static int minimumRaise(JsonNode gameState) {
         int highestBet = Utils.getHighestBet(gameState);
         int ownBet = Utils.ownBet(gameState);
         int minimumRaise = gameState.get("minimum_raise").asInt();
 
         return highestBet - ownBet + minimumRaise;
+    }
+
+    private static int call(JsonNode gameState) {
+        int highestBet = Utils.getHighestBet(gameState);
+        int ownBet = Utils.ownBet(gameState);
+        return highestBet - ownBet;
     }
 }
