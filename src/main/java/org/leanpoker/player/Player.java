@@ -10,8 +10,12 @@ public class Player {
 
     public static int betRequest(GameState gameState) {
         try {
-            List<Card> ownCards = Utils.ownCards(gameState);
+            List<JsonNode> otherActivePlayers = Utils.otherActivePlayers(gameState);
+            if (otherActivePlayers.size() > 1 && Utils.ownStack(gameState) <= 50) {
+                return 0;
+            }
 
+            List<Card> ownCards = Utils.ownCards(gameState);
             if (Utils.hasAPair(ownCards) || Utils.hasAHighCard(ownCards) ||
                     Utils.hasPossibleStraightFlash(ownCards)) {
                 return minimumRaise(gameState);
