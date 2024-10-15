@@ -1,11 +1,13 @@
 package org.leanpoker.player;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.StreamSupport;
 
+@Slf4j
 public class Utils {
     public static int getHighestBet(JsonNode request) {
         return request.get("current_buy_in").asInt();

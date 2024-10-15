@@ -16,8 +16,8 @@ public class ControllerTest {
             "      \"stack\":1000,\n" +
             "      \"status\":\"active\",\n" +
             "      \"bet\":0,\n" +
-            "      \"hole_cards\":[],\n" +
-            "      \"version\":\"Version name 1\",\n" +
+            "      \"hole_cards\":[{\"rank\":\"A\",\"suit\":\"club\"},{\"rank\":\"A\",\"suit\":\"heart\"}],\n" +
+            "      \"version\":\"Java Bot v1\",\n" +
             "      \"id\":0\n" +
             "    },\n" +
             "    {\n" +
