@@ -47,7 +47,7 @@ public class Utils {
     }
 
     public static boolean hasAHighCard(List<GameCard> cards) {
-        return cards.stream().anyMatch(card -> CardEvaluator.evaluateCard(card.getRank()) > 10);
+        return cards.stream().anyMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 10);
     }
 
     public static boolean hasTwoHighCards(List<GameCard> cards) {

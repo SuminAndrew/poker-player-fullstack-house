@@ -7,6 +7,8 @@ import org.leanpoker.player.protocol.GameState;
 
 import java.util.List;
 
+import static org.leanpoker.player.Utils.hasPossibleStraightFlash;
+
 public class Player {
 
     static final String VERSION = "Java Bot v1";
@@ -35,10 +37,11 @@ public class Player {
             }
 
             List<GameCard> ownCards = Utils.ownCards(gameState);
-            if (Utils.hasAPair(ownCards) || Utils.hasTwoHighCards(ownCards)) {
+            if (Utils.hasTwoHighCards(ownCards)) {
                 return minimumRaise(gameState);
-            } else if (Utils.hasPossibleStraightFlash(ownCards) ||
-                    (Utils.hasAHighCard(ownCards) && Utils.hasSameSuit(ownCards))) {
+            } else if (hasPossibleStraightFlash(ownCards) ||
+                    (Utils.hasAHighCard(ownCards) && Utils.hasSameSuit(ownCards)) ||
+                    (Utils.hasAPair(ownCards) && !Utils.hasAHighCard(ownCards))) {
                 return call(gameState);
             } else {
                 return 0;
