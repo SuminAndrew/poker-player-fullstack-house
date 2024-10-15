@@ -14,7 +14,7 @@ public class Player {
     public static int betRequest(GameState gameState) {
         try {
             List<GamePlayer> otherActivePlayers = Utils.otherActivePlayers(gameState);
-            if (otherActivePlayers.size() > 1 && Utils.ownStack(gameState) <= 50) {
+            if (otherActivePlayers.size() > 1 && Utils.ownStack(gameState) <= 50 && Utils.ownBet(gameState) < 50) {
                 return 0;
             }
 
