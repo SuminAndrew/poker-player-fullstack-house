@@ -35,10 +35,11 @@ public class Player {
             }
 
             List<GameCard> ownCards = Utils.ownCards(gameState);
-            if (Utils.hasAPair(ownCards) || Utils.hasTwoHighCards(ownCards) ||
-                    (Utils.hasAHighCard(ownCards) && Utils.hasSameSuit(ownCards)) ||
-                    Utils.hasPossibleStraightFlash(ownCards)) {
+            if (Utils.hasAPair(ownCards) || Utils.hasTwoHighCards(ownCards)) {
                 return minimumRaise(gameState);
+            } else if (Utils.hasPossibleStraightFlash(ownCards) ||
+                    (Utils.hasAHighCard(ownCards) && Utils.hasSameSuit(ownCards))) {
+                return call(gameState);
             } else {
                 return 0;
             }
