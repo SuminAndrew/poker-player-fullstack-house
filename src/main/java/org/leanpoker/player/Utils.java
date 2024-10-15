@@ -23,7 +23,7 @@ public class Utils {
     }
 
     private static boolean isOwnPlayer(JsonNode player) {
-        return Player.VERSION.equals(player.get("version"));
+        return Player.VERSION.equals(player.get("version").asText());
     }
 
     public static JsonNode ownPlayer(JsonNode gameState) {
