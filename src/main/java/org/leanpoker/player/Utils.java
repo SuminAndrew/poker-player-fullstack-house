@@ -3,6 +3,7 @@ package org.leanpoker.player;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.StreamSupport;
 
 public class Utils {
@@ -44,5 +45,13 @@ public class Utils {
         return StreamSupport.stream(ownCards.spliterator(), false)
                 .map(jsonNode -> new Card(CardEvaluator.evaluateCard(jsonNode.get("rank").asText()), jsonNode.get("suit").asText()))
                 .toList();
+    }
+
+    public static boolean hasAPair(List<Card> cards) {
+        return Objects.equals(cards.get(0).rank(), cards.get(1).rank());
+    }
+
+    public static boolean hasAHighCard(List<Card> cards) {
+        return cards.stream().anyMatch(card -> card.rank() > 10);
     }
 }
