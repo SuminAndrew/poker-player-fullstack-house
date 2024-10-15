@@ -32,7 +32,7 @@ public class HandEvaluatorTest {
             "            \"suit\": \"hearts\"\n" +
             "        },\n" +
             "        {\n" +
-            "            \"rank\": \"6\",\n" +
+            "            \"rank\": \"10\",\n" +
             "            \"suit\": \"clubs\"\n" +
             "        }\n" +
             "    ]";

@@ -51,7 +51,14 @@ public class Card {
     }
 
     public static Card fromJson(JsonNode cardNode) {
-        return Card.fromString(cardNode.get("rank").textValue() + cardNode.get("suit").textValue().substring(0, 1));
+        String rank = cardNode.get("rank").textValue();
+        if ("10".equals(rank)) {
+            rank = "T";
+        }
+
+        String suit = cardNode.get("suit").textValue().substring(0, 1);
+
+        return Card.fromString(rank + suit);
     }
 
     /**
