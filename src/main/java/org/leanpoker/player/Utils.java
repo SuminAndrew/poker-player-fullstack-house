@@ -2,6 +2,7 @@ package org.leanpoker.player;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 public class Utils {
@@ -27,5 +28,21 @@ public class Utils {
 
     private static boolean isOwnPlayer(JsonNode player) {
         return Player.VERSION.equals(player.get("version"));
+    }
+
+    public static JsonNode ownPlayer(JsonNode gameState) {
+        JsonNode players = gameState.get("players");
+        return StreamSupport.stream(players.spliterator(), false)
+                .filter(Utils::isOwnPlayer)
+                .findAny()
+                .orElseThrow();
+    }
+
+    public static List<Card> ownCards(JsonNode gameState) {
+        JsonNode ownPlayer = ownPlayer(gameState);
+        JsonNode ownCards = ownPlayer.get("hole_cards");
+        return StreamSupport.stream(ownCards.spliterator(), false)
+                .map(jsonNode -> new Card(CardEvaluator.evaluateCard(jsonNode.get("rank").asText()), jsonNode.get("suit").asText()))
+                .toList();
     }
 }
