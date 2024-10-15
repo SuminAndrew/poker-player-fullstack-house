@@ -14,7 +14,7 @@ public class HandEvaluatorTest {
     private static final String HOLE_CARDS = "[                         \n" +
             "                {\n" +
             "                    \"rank\": \"6\",                    \n" +
-            "                    \"suit\": \"hearts\"                \n" +
+            "                    \"suit\": \"spades\"                \n" +
             "                },\n" +
             "                {\n" +
             "                    \"rank\": \"K\",\n" +
@@ -41,8 +41,9 @@ public class HandEvaluatorTest {
 
     @Test
     public void testEvaluateHand() throws JsonProcessingException {
-        assertTrue(
-                HandEvaluator.evaluateHand(MAPPER.readTree(HOLE_CARDS), MAPPER.readTree(COMMUNITY_CARDS)) >= 0
+        assertEquals(
+                5093,
+                HandEvaluator.evaluateHand(MAPPER.readTree(HOLE_CARDS), MAPPER.readTree(COMMUNITY_CARDS))
         );
     }
 

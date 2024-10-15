@@ -40,7 +40,18 @@ public class Utils {
         JsonNode ownPlayer = ownPlayer(gameState);
         JsonNode ownCards = ownPlayer.get("hole_cards");
         return StreamSupport.stream(ownCards.spliterator(), false)
-                .map(jsonNode -> new Card(CardEvaluator.evaluateCard(jsonNode.get("rank").asText()), jsonNode.get("suit").asText()))
+                .map(Utils::toCard)
+                .toList();
+    }
+
+    private static Card toCard(JsonNode card) {
+        return new Card(CardEvaluator.evaluateCard(card.get("rank").asText()), card.get("suit").asText());
+    }
+
+    public static List<Card> communityCards(JsonNode gameState) {
+        JsonNode communityCards = gameState.get("community_cards");
+        return StreamSupport.stream(communityCards.spliterator(), false)
+                .map(Utils::toCard)
                 .toList();
     }
 
