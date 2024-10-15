@@ -18,13 +18,8 @@ public class Utils {
 //        return maxBet;
     }
 
-    public static int ownBet(JsonNode request) {
-        JsonNode players = request.get("players");
-        return StreamSupport.stream(players.spliterator(), false)
-                .filter(jsonNode -> isOwnPlayer(jsonNode))
-                .findAny()
-                .map(jsonNode -> jsonNode.get("bet").asInt())
-                .orElse(0);
+    public static int ownBet(JsonNode gameState) {
+        return ownPlayer(gameState).get("bet").asInt();
     }
 
     private static boolean isOwnPlayer(JsonNode player) {
