@@ -1,6 +1,7 @@
 package org.leanpoker.player.evaluator;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.leanpoker.player.protocol.GameCard;
 
 /**
  * An immutable class representing a card from a normal 52-card deck.
@@ -48,6 +49,17 @@ public class Card {
         }
 
         value = (1 << (rank + 16)) | suit | (rank << 8) | Tables.PRIMES[rank];
+    }
+
+    public static Card fromGameCard(GameCard card) {
+        String rank = card.getRank();
+        if ("10".equals(rank)) {
+            rank = "T";
+        }
+
+        String suit = card.getSuit().getSuit().substring(0, 1);
+
+        return Card.fromString(rank + suit);
     }
 
     public static Card fromJson(JsonNode cardNode) {

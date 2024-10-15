@@ -37,44 +37,33 @@ public class Utils {
                 .orElseThrow();
     }
 
-    public static List<Card> ownCards(GameState gameState) {
+    public static List<GameCard> ownCards(GameState gameState) {
         GamePlayer ownPlayer = ownPlayer(gameState);
-        List<GameCard> ownCards = ownPlayer.getHoleCards();
-        return ownCards.stream().map(Utils::toCard).toList();
+        return ownPlayer.getHoleCards();
     }
 
-    private static Card toCard(GameCard card) {
-        return new Card(CardEvaluator.evaluateCard(card.getRank()), card.getSuit().getSuit());
+    public static boolean hasAPair(List<GameCard> cards) {
+        return Objects.equals(cards.get(0).getRank(), cards.get(1).getRank());
     }
 
-    public static List<Card> communityCards(GameState gameState) {
-        List<GameCard> cards = gameState.getCommunityCards();
-        return cards.stream()
-                .map(Utils::toCard)
-                .toList();
+    public static boolean hasAHighCard(List<GameCard> cards) {
+        return cards.stream().anyMatch(card -> CardEvaluator.evaluateCard(card.getRank()) > 10);
     }
 
-    public static boolean hasAPair(List<Card> cards) {
-        return Objects.equals(cards.get(0).rank(), cards.get(1).rank());
+    public static boolean hasTwoHighCards(List<GameCard> cards) {
+        return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) > 10);
     }
 
-    public static boolean hasAHighCard(List<Card> cards) {
-        return cards.stream().anyMatch(card -> card.rank() > 10);
-    }
-
-    public static boolean hasTwoHighCards(List<Card> cards) {
-        return cards.stream().allMatch(card -> card.rank() > 10);
-    }
-
-    public static boolean hasPossibleStraightFlash(List<Card> cards) {
-        int rankDifference = Math.abs(cards.get(0).rank() - cards.get(1).rank());
+    public static boolean hasPossibleStraightFlash(List<GameCard> cards) {
+        int rankDifference = Math.abs(CardEvaluator.evaluateCard(cards.get(0).getRank()) -
+                CardEvaluator.evaluateCard(cards.get(1).getRank()));
         if (rankDifference > 1) {
             return false;
         }
-        if (!Objects.equals(cards.get(0).suit(), cards.get(1).suit())) {
+        if (!Objects.equals(cards.get(0).getSuit(), cards.get(1).getSuit())) {
             return false;
         }
-        if (cards.stream().anyMatch(card -> card.rank() <= 3)) {
+        if (cards.stream().anyMatch(card -> CardEvaluator.evaluateCard(card.getRank()) <= 3)) {
             return false;
         }
         return true;

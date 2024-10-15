@@ -1,6 +1,7 @@
 package org.leanpoker.player.evaluator;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.leanpoker.player.protocol.GameCard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,20 @@ public abstract class Hand {
         // Remaining cards
         final int product = (c1 & 0xFF) * (c2 & 0xFF) * (c3 & 0xFF) * (c4 & 0xFF) * (c5 & 0xFF);
         return Tables.Hash.Values.TABLE[hash(product)];
+    }
+
+    public static Card[] fomCards(List<GameCard> holeCards, List<GameCard> communityCards) {
+        List<Card> cards = new ArrayList<>();
+
+        for (GameCard card : holeCards) {
+            cards.add(Card.fromGameCard(card));
+        }
+
+        for (GameCard card : communityCards) {
+            cards.add(Card.fromGameCard(card));
+        }
+
+        return cards.toArray(new Card[0]);
     }
 
     public static Card[] fromJson(JsonNode holeCards, JsonNode communityCards) {

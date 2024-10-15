@@ -1,5 +1,7 @@
 package org.leanpoker.player;
 
+import org.leanpoker.player.evaluator.HandEvaluator;
+import org.leanpoker.player.protocol.GameCard;
 import org.leanpoker.player.protocol.GamePlayer;
 import org.leanpoker.player.protocol.GameState;
 
@@ -16,7 +18,12 @@ public class Player {
                 return 0;
             }
 
-            List<Card> ownCards = Utils.ownCards(gameState);
+            List<GameCard> communityCards = gameState.getCommunityCards();
+            if (communityCards.size() == 3) {
+                HandEvaluator.evaluateHand(Utils.ownCards(gameState), gameState.getCommunityCards());
+            }
+
+            List<GameCard> ownCards = Utils.ownCards(gameState);
             if (Utils.hasAPair(ownCards) || Utils.hasTwoHighCards(ownCards) ||
                     Utils.hasPossibleStraightFlash(ownCards)) {
                 return minimumRaise(gameState);
