@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.leanpoker.player.protocol.GameState;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -46,8 +47,8 @@ public class PlayerTest {
     @Test
     public void testBetRequest() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode actualObj = mapper.readTree(GAME_STATE);
+        GameState gameState = mapper.readValue(GAME_STATE, GameState.class);
 
-        assertTrue(Player.betRequest(actualObj) >= 0);
+        assertTrue(Player.betRequest(gameState) >= 0);
     }
 }

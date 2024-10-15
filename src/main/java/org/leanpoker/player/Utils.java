@@ -1,12 +1,11 @@
 package org.leanpoker.player;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import java.util.stream.StreamSupport;
+import org.leanpoker.player.protocol.GamePlayer;
+import org.leanpoker.player.protocol.GameState;
 
 public class Utils {
-    public static int getHighestBet(JsonNode request) {
-        return request.get("current_buy_in").asInt();
+    public static int getHighestBet(GameState gameState) {
+        return gameState.getCurrentBuyIn();
 //        JsonNode players = request.get("players");
 //        int maxBet = StreamSupport.stream(players.spliterator(), false)
 //                .filter(jsonNode -> !isOwnPlayer(jsonNode))
@@ -16,16 +15,15 @@ public class Utils {
 //        return maxBet;
     }
 
-    public static int ownBet(JsonNode request) {
-        JsonNode players = request.get("players");
-        return StreamSupport.stream(players.spliterator(), false)
-                .filter(jsonNode -> isOwnPlayer(jsonNode))
+    public static int ownBet(GameState gameState) {
+        return gameState.getPlayers().stream()
+                .filter(Utils::isOwnPlayer)
+                .map(GamePlayer::getBet)
                 .findAny()
-                .map(jsonNode -> jsonNode.get("bet").asInt())
                 .orElse(0);
     }
 
-    private static boolean isOwnPlayer(JsonNode player) {
-        return Player.VERSION.equals(player.get("version"));
+    private static boolean isOwnPlayer(GamePlayer player) {
+        return Player.VERSION.equals(player.getVersion());
     }
 }
