@@ -99,7 +99,7 @@ public class GameState {
     private int pot;
 
     @JsonProperty("community_cards")
-    private List<Card> communityCards;
+    private List<GameCard> communityCards;
 
     private List<GamePlayer> players;
 

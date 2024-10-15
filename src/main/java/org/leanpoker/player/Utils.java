@@ -1,6 +1,7 @@
 package org.leanpoker.player;
 
 import lombok.extern.slf4j.Slf4j;
+import org.leanpoker.player.protocol.GameCard;
 import org.leanpoker.player.protocol.GamePlayer;
 import org.leanpoker.player.protocol.GameState;
 import org.leanpoker.player.protocol.Status;
@@ -38,8 +39,18 @@ public class Utils {
 
     public static List<Card> ownCards(GameState gameState) {
         GamePlayer ownPlayer = ownPlayer(gameState);
-        return ownPlayer.getHoleCards().stream()
-                .map(card -> new Card(CardEvaluator.evaluateCard(card.getRank()), card.getSuit().getSuit()))
+        List<GameCard> ownCards = ownPlayer.getHoleCards();
+        return ownCards.stream().map(Utils::toCard).toList();
+    }
+
+    private static Card toCard(GameCard card) {
+        return new Card(CardEvaluator.evaluateCard(card.getRank()), card.getSuit().getSuit());
+    }
+
+    public static List<Card> communityCards(GameState gameState) {
+        List<GameCard> cards = gameState.getCommunityCards();
+        return cards.stream()
+                .map(Utils::toCard)
                 .toList();
     }
 

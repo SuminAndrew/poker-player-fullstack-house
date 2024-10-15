@@ -20,7 +20,7 @@ public class GamePlayer {
     private int bet;
 
     @JsonProperty("hole_cards")
-    private List<Card> holeCards;
+    private List<GameCard> holeCards;
 
     private String version;
 

@@ -7,7 +7,7 @@ import lombok.ToString;
 @Data
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Card {
+public class GameCard {
 
     private String rank;
 
