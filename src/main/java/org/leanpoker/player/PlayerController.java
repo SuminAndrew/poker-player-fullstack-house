@@ -29,7 +29,7 @@ public class PlayerController {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String doPost(@Body Map<String, String> body) throws JsonProcessingException {
         try {
-            log.info("game body:\n{}", mapper.writeValueAsString(body));
+            log.info("game body: {}", mapper.writeValueAsString(body));
         } catch (Throwable t) {
             log.error("error:", t);
         }
