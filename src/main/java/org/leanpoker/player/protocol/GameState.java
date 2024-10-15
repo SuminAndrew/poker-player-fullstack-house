@@ -2,7 +2,7 @@ package org.leanpoker.player.protocol;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
@@ -41,6 +41,7 @@ import java.util.List;
 }
  */
 @Data
+@ToString
 public class GameState {
 
     /**
@@ -99,4 +100,8 @@ public class GameState {
 
     @JsonProperty("minimum_raise")
     private int minimumRaise;
+
+    @JsonProperty("in_action")
+    private int inAction;
+
 }

@@ -2,10 +2,12 @@ package org.leanpoker.player.protocol;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.List;
 
 @Data
+@ToString
 public class GamePlayer {
     private String name;
 

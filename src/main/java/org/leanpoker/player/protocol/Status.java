@@ -2,8 +2,10 @@ package org.leanpoker.player.protocol;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 public enum Status {
     ACTIVE("active"),
     FOLDED("folded"),
