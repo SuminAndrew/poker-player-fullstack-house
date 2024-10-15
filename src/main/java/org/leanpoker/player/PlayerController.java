@@ -9,8 +9,11 @@ import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Map;
 
+@Slf4j
 @Controller()
 public class PlayerController {
 
@@ -24,6 +27,12 @@ public class PlayerController {
     @Post(produces = MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public String doPost(@Body Map<String, String> body) throws JsonProcessingException {
+        try {
+            log.info("game body: {}", body);
+        } catch (Throwable t) {
+            log.error("error:", t);
+        }
+
         String action = body.get("action");
         String gameState = body.get("game_state");
         if ("bet_request".equals(action)) {
