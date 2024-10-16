@@ -35,11 +35,12 @@ public class Player {
             List<GameCard> communityCards = gameState.getCommunityCards();
             if ((communityCards.size() >= 3) && (communityCards.size() <= 5)) {
                 int handRating = HandEvaluator.evaluateHand(Utils.ownCards(gameState), gameState.getCommunityCards());
+                if (hasAPairOrMore(communityCards)) {
+                    handRating += 500;
+                }
                 if (handRating >= 0 && handRating < 1500) {
                     return minimumRaise(gameState);
-                } else if (handRating < 3000 && !hasAPairOrMore(communityCards)) {
-                    return call(gameState);
-                } else if (hasAPairOrMore(communityCards) && handRating < 2000) {
+                } else if (handRating < 3000) {
                     return call(gameState);
                 } else {
                     return 0;
