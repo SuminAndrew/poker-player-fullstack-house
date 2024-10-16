@@ -75,8 +75,8 @@ public class Utils {
     }
 
     public static boolean isOurBetLow(GameState gameState) {
-        int halfOfOurMoney = (ownBet(gameState) + ownStack(gameState)) / 2;
-        return ownBet(gameState) < halfOfOurMoney;
+        int thirdOfOurMoney = (ownBet(gameState) + ownStack(gameState)) / 3;
+        return ownBet(gameState) < thirdOfOurMoney;
     }
 
     public static boolean hasPossibleStraightFlash(List<GameCard> cards) {
