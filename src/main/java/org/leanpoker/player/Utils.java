@@ -58,6 +58,10 @@ public class Utils {
         return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 10);
     }
 
+    public static boolean hasAnAce(List<GameCard> cards) {
+        return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) == 14);
+    }
+
     public static boolean hasAHighPair(List<GameCard> cards) {
         return hasAPair(cards) && hasAHighCard(cards);
     }

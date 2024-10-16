@@ -10,6 +10,7 @@ import java.util.List;
 import static org.leanpoker.player.Utils.hasAHighCard;
 import static org.leanpoker.player.Utils.hasALowPair;
 import static org.leanpoker.player.Utils.hasAHighPair;
+import static org.leanpoker.player.Utils.hasAnAce;
 import static org.leanpoker.player.Utils.hasPossibleStraightFlash;
 import static org.leanpoker.player.Utils.hasSameSuit;
 import static org.leanpoker.player.Utils.hasTwoHighCards;
@@ -50,15 +51,13 @@ public class Player {
             List<GameCard> ownCards = Utils.ownCards(gameState);
             if (hasTwoSuperHighCards(ownCards) || hasAHighPair(ownCards)) {
                 return minimumRaise(gameState);
-            } else if (hasTwoHighCards(ownCards)) {
+            } else if (hasTwoHighCards(ownCards) && hasAnAce(ownCards)) {
                 if (isOurBetLow(gameState)) {
                     return call(gameState);
                 } else {
                     return 0;
                 }
-            } else if (hasPossibleStraightFlash(ownCards) ||
-                    (hasAHighCard(ownCards) && hasSameSuit(ownCards)) ||
-                    (hasALowPair(ownCards))) {
+            } else if (hasPossibleStraightFlash(ownCards)) {
                 if (isOurBetLow(gameState)) {
                     return call(gameState);
                 } else {
