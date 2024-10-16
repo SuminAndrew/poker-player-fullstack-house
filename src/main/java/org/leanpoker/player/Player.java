@@ -90,7 +90,7 @@ public class Player {
         if (amountToCall < ownStack(gameState) * 0.01 &&
                 ownBet(gameState) <= bigBlind(gameState)) {
             return amountToCall;
-        } if (amountToCall <= gameState.getSmallBlind()) {
+        } else if (amountToCall <= gameState.getSmallBlind()) {
             return amountToCall;
         }else {
             return 0;
