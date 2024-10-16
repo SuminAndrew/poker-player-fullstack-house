@@ -57,7 +57,7 @@ public class Player {
             } else if (hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) {
                     return call(gameState);
             } else if (hasPossibleStraightFlash(ownCards) ||
-                    hasALowPair(ownCards)) {
+                    hasAPairOrMore(ownCards)) {
                 return smallCallOrFold(gameState);
             } else {
                 return 0;
