@@ -1,12 +1,10 @@
 package org.leanpoker.player.evaluator;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.leanpoker.player.protocol.GameCard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /** Utility methods for evaluating or creating a hand of cards. */
 public abstract class Hand {
@@ -60,7 +58,7 @@ public abstract class Hand {
         return Tables.Hash.Values.TABLE[hash(product)];
     }
 
-    public static Card[] fomCards(List<GameCard> holeCards, List<GameCard> communityCards) {
+    public static Card[] fromCards(List<GameCard> holeCards, List<GameCard> communityCards) {
         List<Card> cards = new ArrayList<>();
 
         for (GameCard card : holeCards) {
@@ -72,40 +70,6 @@ public abstract class Hand {
         }
 
         return cards.toArray(new Card[0]);
-    }
-
-    public static Card[] fromJson(JsonNode holeCards, JsonNode communityCards) {
-        List<Card> cards = new ArrayList<>();
-
-        for (JsonNode card : holeCards) {
-            cards.add(Card.fromJson(card));
-        }
-
-        for (JsonNode card : communityCards) {
-            cards.add(Card.fromJson(card));
-        }
-
-        return cards.toArray(new Card[0]);
-    }
-
-    /**
-     * Creates a new 5-card hand from the given string.
-     * @param string the string to create the hand from, such as "Kd 5s Jc Ah Qc"
-     * @return a new hand as an array of cards
-     * @see Card
-     */
-    public static Card[] fromString(String string) {
-        final String[] parts = string.split(" ");
-        final Card[] cards = new Card[parts.length];
-
-        if (parts.length != 5)
-            throw new IllegalArgumentException("Exactly 5 cards are required.");
-
-        int index = 0;
-        for (String part : parts)
-            cards[index++] = Card.fromString(part);
-
-        return cards;
     }
 
     /**

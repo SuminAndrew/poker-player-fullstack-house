@@ -1,6 +1,5 @@
 package org.leanpoker.player.evaluator;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.leanpoker.player.protocol.GameCard;
 
 /**
@@ -58,17 +57,6 @@ public class Card {
         }
 
         String suit = card.getSuit().getSuit().substring(0, 1);
-
-        return Card.fromString(rank + suit);
-    }
-
-    public static Card fromJson(JsonNode cardNode) {
-        String rank = cardNode.get("rank").textValue();
-        if ("10".equals(rank)) {
-            rank = "T";
-        }
-
-        String suit = cardNode.get("suit").textValue().substring(0, 1);
 
         return Card.fromString(rank + suit);
     }

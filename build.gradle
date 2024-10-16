@@ -38,6 +38,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
     testCompileOnly 'org.projectlombok:lombok:1.18.34'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.34'
+    implementation 'org.apache.commons:commons-numbers-combinatorics:1.2'
 
     testImplementation "io.micronaut.test:micronaut-test-junit5:1.1.5"
     testImplementation "org.mockito:mockito-junit-jupiter:2.22.0"
