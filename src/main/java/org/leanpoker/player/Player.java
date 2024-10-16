@@ -31,7 +31,7 @@ public class Player {
                 return 0;
             }
 
-            // 3 or 4 community cards
+            // 3 to 5 community cards
             List<GameCard> communityCards = gameState.getCommunityCards();
             if ((communityCards.size() >= 3) && (communityCards.size() <= 5)) {
                 int handRating = HandEvaluator.evaluateHand(Utils.ownCards(gameState), gameState.getCommunityCards());
@@ -53,11 +53,11 @@ public class Player {
                 return minimumRaise(gameState);
             } else if ((hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) ||
                     hasPossibleStraightFlash(ownCards)) {
-                if (isOurBetLow(gameState)) {
+//                if (isOurBetLow(gameState)) {
                     return call(gameState);
-                } else {
-                    return 0;
-                }
+//                } else {
+//                    return 0;
+//                }
             } else {
                 return 0;
             }
