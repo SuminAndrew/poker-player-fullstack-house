@@ -8,8 +8,8 @@ import org.leanpoker.player.protocol.GameState;
 import java.util.List;
 
 import static org.leanpoker.player.Utils.hasAHighCard;
-import static org.leanpoker.player.Utils.hasAPair;
-import static org.leanpoker.player.Utils.hasHighPair;
+import static org.leanpoker.player.Utils.hasALowPair;
+import static org.leanpoker.player.Utils.hasAHighPair;
 import static org.leanpoker.player.Utils.hasPossibleStraightFlash;
 import static org.leanpoker.player.Utils.hasSameSuit;
 import static org.leanpoker.player.Utils.hasTwoHighCards;
@@ -48,7 +48,7 @@ public class Player {
 
             // no community cards
             List<GameCard> ownCards = Utils.ownCards(gameState);
-            if (hasTwoSuperHighCards(ownCards) || hasHighPair(ownCards)) {
+            if (hasTwoSuperHighCards(ownCards) || hasAHighPair(ownCards)) {
                 return minimumRaise(gameState);
             } else if (hasTwoHighCards(ownCards)) {
                 if (isOurBetLow(gameState)) {
@@ -58,7 +58,7 @@ public class Player {
                 }
             } else if (hasPossibleStraightFlash(ownCards) ||
                     (hasAHighCard(ownCards) && hasSameSuit(ownCards)) ||
-                    (hasAPair(ownCards) && !hasAHighCard(ownCards))) {
+                    (hasALowPair(ownCards))) {
                 if (isOurBetLow(gameState)) {
                     return call(gameState);
                 } else {

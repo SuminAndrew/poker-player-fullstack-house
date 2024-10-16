@@ -9,8 +9,6 @@ import org.leanpoker.player.protocol.Status;
 import java.util.List;
 import java.util.Objects;
 
-import static org.leanpoker.player.Utils.ownStack;
-
 @Slf4j
 public class Utils {
     public static int getHighestBet(GameState gameState) {
@@ -44,6 +42,10 @@ public class Utils {
         return ownPlayer.getHoleCards();
     }
 
+    public static boolean hasALowPair(List<GameCard> cards) {
+        return hasAPair(cards) && !hasAHighCard(cards);
+    }
+
     public static boolean hasAPair(List<GameCard> cards) {
         return Objects.equals(cards.get(0).getRank(), cards.get(1).getRank());
     }
@@ -56,12 +58,12 @@ public class Utils {
         return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 10);
     }
 
-    public static boolean hasHighPair(List<GameCard> cards) {
+    public static boolean hasAHighPair(List<GameCard> cards) {
         return hasAPair(cards) && hasAHighCard(cards);
     }
 
     public static boolean hasTwoSuperHighCards(List<GameCard> cards) {
-        return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 12);
+        return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 13);
     }
 
     public static boolean hasSameSuit(List<GameCard> cards) {
