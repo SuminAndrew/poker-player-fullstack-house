@@ -104,4 +104,14 @@ public class HandEvaluatorTest {
                 5
         ).size());
     }
+
+    @Test
+    public void testGetCombinationsStraight() {
+        assertEquals(1,
+                HandEvaluator.getAllCombinations(
+                new Card[]{new Card(ACE, CLUBS), new Card(DEUCE, HEARTS), new Card(TREY, HEARTS),
+                        new Card(FOUR, SPADES), new Card(FIVE, CLUBS)},
+                5
+        ).size());
+    }
 }
