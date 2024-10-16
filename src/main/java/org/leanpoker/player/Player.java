@@ -67,8 +67,8 @@ public class Player {
                 }
             } else {
                 if (otherActivePlayers.size() == 1) {
-                    if (hasAHighCard(ownCards)) {
-                        return call(gameState);
+                    if (hasAHighCard(ownCards) || hasAPairOrMore(ownCards)) {
+                        return allIn(gameState);
                     }
                 }
                 return 0;
@@ -81,6 +81,10 @@ public class Player {
     }
 
     public static void showdown(GameState gameState) {
+    }
+
+    private static int allIn(GameState gameState) {
+        return ownStack(gameState);
     }
 
     private static int minimumRaise(GameState gameState) {
@@ -98,7 +102,7 @@ public class Player {
 
     private static int smallCallOrFold(GameState gameState) {
         int amountToCall = call(gameState);
-        if (amountToCall < ownStack(gameState) * 0.05 &&
+        if (amountToCall < ownStack(gameState) * 0.01 &&
                 ownBet(gameState) <= bigBlind(gameState)) {
             return amountToCall;
         } else {
