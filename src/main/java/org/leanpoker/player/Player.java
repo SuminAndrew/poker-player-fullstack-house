@@ -53,11 +53,7 @@ public class Player {
                 return minimumRaise(gameState);
             } else if ((hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) ||
                     hasPossibleStraightFlash(ownCards)) {
-//                if (isOurBetLow(gameState)) {
                     return call(gameState);
-//                } else {
-//                    return 0;
-//                }
             } else {
                 return 0;
             }
