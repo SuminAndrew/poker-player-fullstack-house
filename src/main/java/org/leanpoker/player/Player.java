@@ -8,6 +8,7 @@ import org.leanpoker.player.protocol.GameState;
 import java.util.List;
 
 import static org.leanpoker.player.Utils.bigBlind;
+import static org.leanpoker.player.Utils.hasAHighCard;
 import static org.leanpoker.player.Utils.hasALowPair;
 import static org.leanpoker.player.Utils.hasAHighPair;
 import static org.leanpoker.player.Utils.hasAPairOrMore;
@@ -61,6 +62,11 @@ public class Player {
                     hasTwoHighCards(ownCards)) {
                 return smallCallOrFold(gameState);
             } else {
+                if (otherActivePlayers.size() == 1) {
+                    if (hasAHighCard(ownCards)) {
+                        return call(gameState);
+                    }
+                }
                 return 0;
             }
         } catch (Exception e) {
