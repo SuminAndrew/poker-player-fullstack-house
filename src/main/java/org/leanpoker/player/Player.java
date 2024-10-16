@@ -52,7 +52,7 @@ public class Player {
                 return minimumRaise(gameState);
             } else if (hasTwoHighCards(ownCards)) {
                 if (isOurBetLow(gameState)) {
-                    return minimumRaise(gameState);
+                    return call(gameState);
                 } else {
                     return 0;
                 }
