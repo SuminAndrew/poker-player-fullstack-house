@@ -46,6 +46,7 @@ public class Player {
                 return minimumRaise(gameState);
             }
 
+            // no community cards
             List<GameCard> ownCards = Utils.ownCards(gameState);
             if (hasTwoSuperHighCards(ownCards) || hasHighPair(ownCards)) {
                 return minimumRaise(gameState);

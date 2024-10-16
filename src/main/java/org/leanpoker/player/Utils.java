@@ -61,7 +61,7 @@ public class Utils {
     }
 
     public static boolean hasTwoSuperHighCards(List<GameCard> cards) {
-        return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 13);
+        return cards.stream().allMatch(card -> CardEvaluator.evaluateCard(card.getRank()) >= 12);
     }
 
     public static boolean hasSameSuit(List<GameCard> cards) {
