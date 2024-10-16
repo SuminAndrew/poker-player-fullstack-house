@@ -8,6 +8,7 @@ import org.leanpoker.player.protocol.Status;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class Utils {
@@ -43,11 +44,11 @@ public class Utils {
     }
 
     public static boolean hasALowPair(List<GameCard> cards) {
-        return hasAPair(cards) && !hasAHighCard(cards);
+        return hasAPairOrMore(cards) && !hasAHighCard(cards);
     }
 
-    public static boolean hasAPair(List<GameCard> cards) {
-        return Objects.equals(cards.get(0).getRank(), cards.get(1).getRank());
+    public static boolean hasAPairOrMore(List<GameCard> cards) {
+        return cards.stream().map(GameCard::getRank).collect(Collectors.toSet()).size() < cards.size();
     }
 
     public static boolean hasAHighCard(List<GameCard> cards) {
@@ -63,7 +64,7 @@ public class Utils {
     }
 
     public static boolean hasAHighPair(List<GameCard> cards) {
-        return hasAPair(cards) && hasAHighCard(cards);
+        return hasAPairOrMore(cards) && hasAHighCard(cards);
     }
 
     public static boolean hasTwoSuperHighCards(List<GameCard> cards) {

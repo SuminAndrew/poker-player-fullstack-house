@@ -8,15 +8,14 @@ import org.leanpoker.player.protocol.GameState;
 import java.util.List;
 
 import static org.leanpoker.player.Utils.bigBlind;
-import static org.leanpoker.player.Utils.hasAHighCard;
 import static org.leanpoker.player.Utils.hasALowPair;
 import static org.leanpoker.player.Utils.hasAHighPair;
+import static org.leanpoker.player.Utils.hasAPairOrMore;
 import static org.leanpoker.player.Utils.hasAnAce;
 import static org.leanpoker.player.Utils.hasPossibleStraightFlash;
 import static org.leanpoker.player.Utils.hasSameSuit;
 import static org.leanpoker.player.Utils.hasTwoHighCards;
 import static org.leanpoker.player.Utils.hasTwoSuperHighCards;
-import static org.leanpoker.player.Utils.isOurBetLow;
 import static org.leanpoker.player.Utils.ownBet;
 import static org.leanpoker.player.Utils.ownStack;
 
@@ -38,7 +37,9 @@ public class Player {
                 int handRating = HandEvaluator.evaluateHand(Utils.ownCards(gameState), gameState.getCommunityCards());
                 if (handRating >= 0 && handRating < 1500) {
                     return minimumRaise(gameState);
-                } else if (handRating < 3500) {
+                } else if (handRating < 3000 && !hasAPairOrMore(communityCards)) {
+                    return call(gameState);
+                } else if (hasAPairOrMore(communityCards) && handRating < 2000) {
                     return call(gameState);
                 } else {
                     return 0;

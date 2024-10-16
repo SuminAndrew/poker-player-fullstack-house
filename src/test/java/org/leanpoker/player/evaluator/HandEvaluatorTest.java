@@ -77,6 +77,15 @@ public class HandEvaluatorTest {
     }
 
     @Test
+    public void testEvaluateHandTwoPairs() {
+        assertEquals(
+                2469,
+                Hand.evaluate(new Card[]{new Card(ACE, CLUBS), new Card(ACE, HEARTS),
+                        new Card(KING, DIAMONDS), new Card(KING, SPADES), new Card(JACK, DIAMONDS)})
+        );
+    }
+
+    @Test
     public void testEvaluateHandFullHouse() {
         assertEquals(
                 273,
