@@ -9,7 +9,6 @@ import java.util.List;
 
 import static org.leanpoker.player.Utils.bigBlind;
 import static org.leanpoker.player.Utils.hasAHighCard;
-import static org.leanpoker.player.Utils.hasALowPair;
 import static org.leanpoker.player.Utils.hasAHighPair;
 import static org.leanpoker.player.Utils.hasAPairOrMore;
 import static org.leanpoker.player.Utils.hasAnAce;
@@ -53,10 +52,15 @@ public class Player {
 
             // no community cards
             List<GameCard> ownCards = Utils.ownCards(gameState);
+            if (otherActivePlayers.size() == 1 &&
+                    ((hasTwoSuperHighCards(ownCards) || hasAHighPair(ownCards)))) {
+                return allIn(gameState);
+            }
+
             if (hasTwoSuperHighCards(ownCards) || hasAHighPair(ownCards)) {
                 return minimumRaise(gameState);
             } else if (hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) {
-                    return call(gameState);
+                return call(gameState);
             } else if (hasPossibleStraightFlash(ownCards) ||
                     hasAPairOrMore(ownCards) ||
                     hasTwoHighCards(ownCards)) {
