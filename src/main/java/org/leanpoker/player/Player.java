@@ -24,15 +24,16 @@ public class Player {
 
     public static int betRequest(GameState gameState) {
         try {
+            // We are low on money
             List<GamePlayer> otherActivePlayers = Utils.otherActivePlayers(gameState);
             if (otherActivePlayers.size() > 1 && ownStack(gameState) <= 50 && ownBet(gameState) < 50) {
                 return 0;
             }
 
+            // 3 or 4 community cards
             List<GameCard> communityCards = gameState.getCommunityCards();
-            if (communityCards.size() == 3) {
+            if ((communityCards.size() >= 3) && (communityCards.size() <= 5)) {
                 int handRating = HandEvaluator.evaluateHand(Utils.ownCards(gameState), gameState.getCommunityCards());
-                System.out.printf("Evaluate: ownCard=%s, communityCards=%s, rating=%d%n", Utils.ownCards(gameState), communityCards, handRating);
                 if (handRating >= 0 && handRating < 2000) {
                     return minimumRaise(gameState);
                 } else if (handRating < 4000) {
@@ -40,8 +41,8 @@ public class Player {
                 } else {
                     return 0;
                 }
-            }
-            if (communityCards.size() > 3) {
+            } else if (communityCards.size() > 5) {
+                // ???
                 return minimumRaise(gameState);
             }
 
