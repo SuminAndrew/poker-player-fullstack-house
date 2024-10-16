@@ -60,7 +60,11 @@ public class Player {
             } else if (hasPossibleStraightFlash(ownCards) ||
                     hasAPairOrMore(ownCards) ||
                     hasTwoHighCards(ownCards)) {
-                return smallCallOrFold(gameState);
+                if (otherActivePlayers.size() == 1) {
+                    return call(gameState);
+                } else {
+                    return smallCallOrFold(gameState);
+                }
             } else {
                 if (otherActivePlayers.size() == 1) {
                     if (hasAHighCard(ownCards)) {
