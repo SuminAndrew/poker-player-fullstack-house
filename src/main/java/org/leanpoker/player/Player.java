@@ -98,7 +98,7 @@ public class Player {
 
     private static int smallCallOrFold(GameState gameState) {
         int amountToCall = call(gameState);
-        if (amountToCall < ownStack(gameState) * 0.01 &&
+        if (amountToCall < ownStack(gameState) * 0.05 &&
                 ownBet(gameState) <= bigBlind(gameState)) {
             return amountToCall;
         } else {
