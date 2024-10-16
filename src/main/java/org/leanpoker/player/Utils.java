@@ -105,4 +105,8 @@ public class Utils {
         GamePlayer ownPlayer = ownPlayer(gameState);
         return ownPlayer.getStack();
     }
+
+    public static int bigBlind(GameState gameState) {
+        return gameState.getSmallBlind() * 2;
+    }
 }

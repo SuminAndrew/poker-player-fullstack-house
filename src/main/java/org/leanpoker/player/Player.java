@@ -7,6 +7,7 @@ import org.leanpoker.player.protocol.GameState;
 
 import java.util.List;
 
+import static org.leanpoker.player.Utils.bigBlind;
 import static org.leanpoker.player.Utils.hasAHighCard;
 import static org.leanpoker.player.Utils.hasALowPair;
 import static org.leanpoker.player.Utils.hasAHighPair;
@@ -51,9 +52,11 @@ public class Player {
             List<GameCard> ownCards = Utils.ownCards(gameState);
             if (hasTwoSuperHighCards(ownCards) || hasAHighPair(ownCards)) {
                 return minimumRaise(gameState);
-            } else if ((hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) ||
-                    hasPossibleStraightFlash(ownCards)) {
+            } else if (hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) {
                     return call(gameState);
+            } else if (hasPossibleStraightFlash(ownCards) ||
+                    hasALowPair(ownCards)) {
+                return smallCallOrFold(gameState);
             } else {
                 return 0;
             }
@@ -78,5 +81,15 @@ public class Player {
         int highestBet = Utils.getHighestBet(gameState);
         int ownBet = ownBet(gameState);
         return highestBet - ownBet;
+    }
+
+    private static int smallCallOrFold(GameState gameState) {
+        int amountToCall = call(gameState);
+        if (amountToCall < ownStack(gameState) * 0.01 &&
+                ownBet(gameState) <= bigBlind(gameState)) {
+            return amountToCall;
+        } else {
+            return 0;
+        }
     }
 }
