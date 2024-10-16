@@ -7,7 +7,16 @@ import org.leanpoker.player.protocol.GameState;
 
 import java.util.List;
 
+import static org.leanpoker.player.Utils.hasAHighCard;
+import static org.leanpoker.player.Utils.hasAPair;
+import static org.leanpoker.player.Utils.hasHighPair;
 import static org.leanpoker.player.Utils.hasPossibleStraightFlash;
+import static org.leanpoker.player.Utils.hasSameSuit;
+import static org.leanpoker.player.Utils.hasTwoHighCards;
+import static org.leanpoker.player.Utils.hasTwoSuperHighCards;
+import static org.leanpoker.player.Utils.isOurBetLow;
+import static org.leanpoker.player.Utils.ownBet;
+import static org.leanpoker.player.Utils.ownStack;
 
 public class Player {
 
@@ -16,7 +25,7 @@ public class Player {
     public static int betRequest(GameState gameState) {
         try {
             List<GamePlayer> otherActivePlayers = Utils.otherActivePlayers(gameState);
-            if (otherActivePlayers.size() > 1 && Utils.ownStack(gameState) <= 50 && Utils.ownBet(gameState) < 50) {
+            if (otherActivePlayers.size() > 1 && ownStack(gameState) <= 50 && ownBet(gameState) < 50) {
                 return 0;
             }
 
@@ -37,12 +46,22 @@ public class Player {
             }
 
             List<GameCard> ownCards = Utils.ownCards(gameState);
-            if (Utils.hasTwoHighCards(ownCards)) {
+            if (hasTwoSuperHighCards(ownCards) || hasHighPair(ownCards)) {
                 return minimumRaise(gameState);
+            } else if (hasTwoHighCards(ownCards)) {
+                if (isOurBetLow(gameState)) {
+                    return minimumRaise(gameState);
+                } else {
+                    return 0;
+                }
             } else if (hasPossibleStraightFlash(ownCards) ||
-                    (Utils.hasAHighCard(ownCards) && Utils.hasSameSuit(ownCards)) ||
-                    (Utils.hasAPair(ownCards) && !Utils.hasAHighCard(ownCards))) {
-                return call(gameState);
+                    (hasAHighCard(ownCards) && hasSameSuit(ownCards)) ||
+                    (hasAPair(ownCards) && !hasAHighCard(ownCards))) {
+                if (isOurBetLow(gameState)) {
+                    return call(gameState);
+                } else {
+                    return 0;
+                }
             } else {
                 return 0;
             }
@@ -58,14 +77,14 @@ public class Player {
 
     private static int minimumRaise(GameState gameState) {
         int highestBet = Utils.getHighestBet(gameState);
-        int ownBet = Utils.ownBet(gameState);
+        int ownBet = ownBet(gameState);
         int minimumRaise = gameState.getMinimumRaise();
         return highestBet - ownBet + minimumRaise;
     }
 
     private static int call(GameState gameState) {
         int highestBet = Utils.getHighestBet(gameState);
-        int ownBet = Utils.ownBet(gameState);
+        int ownBet = ownBet(gameState);
         return highestBet - ownBet;
     }
 }
