@@ -51,7 +51,7 @@ public class Player {
             List<GameCard> ownCards = Utils.ownCards(gameState);
             if (hasTwoSuperHighCards(ownCards) || hasAHighPair(ownCards)) {
                 return minimumRaise(gameState);
-            } else if (hasTwoHighCards(ownCards) && hasAnAce(ownCards)) {
+            } else if (hasTwoHighCards(ownCards) && hasAnAce(ownCards) && hasSameSuit(ownCards)) {
                 if (isOurBetLow(gameState)) {
                     return call(gameState);
                 } else {
